@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的免費小店</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>🛍️ 我的免費小店</h1>
+        <div id="cart-icon">🛒 <span id="cart-count">0</span></div>
+    </header>
+    
+    <main id="product-grid">
+        <!-- 商品會由 JS 動態生成 -->
+    </main>
+
+    <div id="cart-modal" class="hidden">
+        <div class="cart-content">
+            <h2>購物車</h2>
+            <ul id="cart-items"></ul>
+            <p>總計: $<span id="cart-total">0</span></p>
+            <button onclick="toggleCart()">關閉</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
