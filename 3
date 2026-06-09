@@ -1,0 +1,62 @@
+// 1. 模擬商品數據 (你可以換成真實圖片連結)
+const products = [
+    { id: 1, name: "極簡白T", price: 590, img: "https://picsum.photos/seed/t1/400/400" },
+    { id: 2, name: "復古牛仔褲", price: 1290, img: "https://picsum.photos/seed/t2/400/400" },
+    { id: 3, name: "帆布托特包", price: 890, img: "https://picsum.photos/seed/t3/400/400" },
+    { id: 4, name: "運動襪三入組", price: 350, img: "https://picsum.photos/seed/t4/400/400" }
+];
+
+let cart = [];
+const grid = document.getElementById('product-grid');
+const cartCount = document.getElementById('cart-count');
+const cartModal = document.getElementById('cart-modal');
+const cartItems = document.getElementById('cart-items');
+const cartTotal = document.getElementById('cart-total');
+
+// 2. 渲染商品
+function renderProducts() {
+    grid.innerHTML = products.map(p => `
+        <div class="product-card">
+            <img src="${p.img}" alt="${p.name}">
+            <div class="product-info">
+                <h3>${p.name}</h3>
+                <p>$${p.price}</p>
+                <button onclick="addToCart(${p.id})">加入購物車</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+// 3. 購物車邏輯
+function addToCart(id) {
+    const product = products.find(p => p.id === id);
+    const existing = cart.find(item => item.id === id);
+    
+    if (existing) {
+        existing.qty += 1;
+    } else {
+        cart.push({ ...product, qty: 1 });
+    }
+    updateCartUI();
+}
+
+function updateCartUI() {
+    const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+    const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+    
+    cartCount.textContent = totalItems;
+    cartItems.innerHTML = cart.map(item => `
+        <li>
+            <span>${item.name} x${item.qty}</span>
+            <span>$${item.price * item.qty}</span>
+        </li>
+    `).join('');
+    cartTotal.textContent = totalPrice;
+}
+
+function toggleCart() {
+    cartModal.classList.toggle('hidden');
+}
+
+document.getElementById('cart-icon').addEventListener('click', toggleCart);
+renderProducts();
